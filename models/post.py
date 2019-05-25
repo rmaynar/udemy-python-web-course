@@ -1,10 +1,13 @@
+import datetime
+import uuid
+
 from database import Database
 
 
 class Post:
 
-    def __init__(self, id, blog_id, title, content, author, date):
-        self.id = id
+    def __init__(self, blog_id, title, content, author, date=datetime.datetime.utcnow(), id=None):
+        self.id = uuid.uuid4().hex if id is None else id # creates a new id
         self.blog_id = blog_id
         self.title = title
         self.content = content
@@ -28,9 +31,18 @@ class Post:
         }
 
     @staticmethod
+    def getOne():
+        return Database.findOne(collection='posts', query={})
+
+
+    @staticmethod
     def from_mongo(id):
-            data = Database.findOne('posts', query={'id', id})
+        return Database.findOne(collection='posts', query={'id': id})
+
+    @staticmethod
+    def from_auth(author):
+        return Database.findOne(collection='posts', query={'author': author})
 
     @staticmethod
     def from_blog(id):
-            data = Database.findOne('posts', query={'blog_id', id})
+        return Database.findOne(collection='posts', query={'blog_id': id})
