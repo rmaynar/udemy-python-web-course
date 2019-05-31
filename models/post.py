@@ -7,7 +7,7 @@ from database import Database
 class Post:
 
     def __init__(self, blog_id, title, content, author, date=datetime.datetime.utcnow(), id=None):
-        self.id = uuid.uuid4().hex if id is None else id # creates a new id
+        self.id = uuid.uuid4().hex if id is None else id  # creates a new id
         self.blog_id = blog_id
         self.title = title
         self.content = content
@@ -32,7 +32,7 @@ class Post:
 
     @staticmethod
     def getOne():
-        return Database.findOne(collection='posts', query={})
+        return Database.findOne(collection="posts", query={})
 
 
     @staticmethod
@@ -45,4 +45,4 @@ class Post:
 
     @staticmethod
     def from_blog(id):
-        return Database.findOne(collection='posts', query={'blog_id': id})
+        return [post for post in Database.find(collection='posts', query={'blog_id': id})]
