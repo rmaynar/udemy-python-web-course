@@ -18,9 +18,8 @@ blog.new_post()
 
 blog.save_to_mongo()
 
-print("El blog")
-print(blog.json())
+#print("El blog")
+#print(blog.json())
+from_database = Blog.from_mongo(blog.id)
 
-# from_database = Blog.from_mongo(blog.id)
-#
-# blog.get_posts()
+print(blog.get_posts())
